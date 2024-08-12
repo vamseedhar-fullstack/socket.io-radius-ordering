@@ -3,7 +3,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const mysql = require('mysql2');
 const cors = require('cors');
-
+require('dotenv').config();
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
@@ -16,11 +16,11 @@ const io = socketIo(server, {
 app.use(cors());
 app.use(express.json());
 
-const db = mysql.createConnection({
-  host: '103.145.50.161',
-  user: 'yatayati_vamseedhar',
-  password: 'Vamseedhar@007',
-  database: 'yatayati_vamsee_personal',
+const db = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 db.connect(err => {
